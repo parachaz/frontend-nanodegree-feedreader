@@ -26,6 +26,10 @@ Following new test suites/tests were implemented for this project.
 7. Wrote a test that ensures when a new feed is loaded by the loadFeed function that the content actually changes. 
    This test was implemented using Jasmine's beforeEach and asynchronous done() functions.
 
+How to run the application:
+---------------------------
+To run the application, open index.html file in a web browser. 
+Results from Jasime test suites will be displayed at the bottom half of the browser window.
 
 References:
 -----------
