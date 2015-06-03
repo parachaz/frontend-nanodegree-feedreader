@@ -32,8 +32,8 @@ $(function () {
          * and that the URL is not empty.
          */
         it('URLs are defined', function () {
-            allFeeds.forEach(function (key) {
-                expect(key['url']).toBeTruthy();
+            allFeeds.forEach(function (feed) {
+                expect(feed['url']).toBeTruthy();
             });
         });
 
@@ -43,8 +43,8 @@ $(function () {
          * and that the name is not empty.
          */
         it('Names are defined', function () {
-            allFeeds.forEach(function (key) {
-                expect(key['name']).toBeTruthy();
+            allFeeds.forEach(function (feed) {
+                expect(feed['name']).toBeTruthy();
             });
 
         });
@@ -58,10 +58,8 @@ $(function () {
          */
         it('menu is hidden', function () {
 
-            //get the class of body element
-            var bodyClass = $('body').attr('class');
             //if the class is menu-hidden, menu is hidden
-            expect(bodyClass).toBe('menu-hidden');
+            expect($('body').hasClass('menu-hidden')).toBeTruthy();
         });
 
         /* Test that the menu changes
@@ -83,7 +81,7 @@ $(function () {
             /*fire second click event to hide the menu*/
             $iconList.trigger('click');
             /*now if the menu is hidden the class should be equal to menu-hidden*/
-            expect($body.attr('class')).toBe('menu-hidden');
+            expect($('body').hasClass('menu-hidden')).toBeTruthy();
 
         });
 
@@ -91,9 +89,10 @@ $(function () {
 
     describe('Initial Entries', function () {
         beforeEach(function (done) {
-            loadFeed(0, function () {
-                done();
-            });
+            /*loadFeed(0, function () {
+             done();
+             });*/
+            loadFeed(0, done);
 
         });
         /* Test that there is at least  single .entry element within the .feed container,
@@ -108,9 +107,6 @@ $(function () {
 
 
 
-
-
-    /* TODO: Write a new test suite named "New Feed Selection"*/
     describe('New Feed Selection', function () {
         //variables to hold feeds' contents. 
         var firstFeedContent,
