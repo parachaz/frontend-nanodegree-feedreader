@@ -32,11 +32,9 @@ $(function () {
          * and that the URL is not empty.
          */
         it('URLs are defined', function () {
-            for (var key in allFeeds) {
-                //expect(allFeeds[key]['url']).toBeDefined();
-                //expect(allFeeds[key]['url']).not.toBe('');
-                expect(allFeeds[key]['url']).toBeTruthy();
-            }
+            allFeeds.forEach(function (key) {
+                expect(key['url']).toBeTruthy();
+            });
         });
 
 
@@ -45,16 +43,15 @@ $(function () {
          * and that the name is not empty.
          */
         it('Names are defined', function () {
-            for (var key in allFeeds) {
-                //expect(allFeeds[key]['url']).toBeDefined();
-                //expect(allFeeds[key]['url']).not.toBe('');
-                expect(allFeeds[key]['name']).toBeTruthy();
-            }
+            allFeeds.forEach(function (key) {
+                expect(key['name']).toBeTruthy();
+            });
+
         });
     });
 
 
-   describe('The menu', function () {
+    describe('The menu', function () {
 
         /* Test that ensures the menu element is
          * hidden by default. 
@@ -91,7 +88,7 @@ $(function () {
         });
 
     });
-   
+
     describe('Initial Entries', function () {
         beforeEach(function (done) {
             loadFeed(0, function () {
@@ -115,27 +112,43 @@ $(function () {
 
     /* TODO: Write a new test suite named "New Feed Selection"*/
     describe('New Feed Selection', function () {
-        //get the current content of the feed
-        var initialFeedContent ;
+        //variables to hold feeds' contents. 
+        var firstFeedContent,
+                secondFeedConent;
+
         beforeEach(function (done) {
-            /*Get the content of original feed.*/
-            initialFeedContent = $('.feed').html();
-            /*load a new feed*/
-            loadFeed(1, done);
+            /* To ensure that a feed is present, we will first
+             * load a new feed, and save its content to 
+             * firstFeedContent variable. From the call back
+             * method will we load another feed and save its cntent
+             * to secondFeedContent variabl and call the done() 
+             * method. 
+             * We will then compare the two variables to verify
+             * that the contents do change when a new feed is loaded.
+             */
+            loadFeed(1, function () {
+                firstFeedContent = $('.feed').html();
+                loadFeed(2, function () {
+                    secondFeedContent = $('.feed').html();
+                    done();
+                });
+
+            });
 
         });
         /*restore the original feed after testing the content change.*/
         afterEach(function (done) {
             loadFeed(0, done);
         });
-       
+
         /* Test to ensure theat the contect is changed when a new feed is loaded.
          */
 
         it('changes content with new feed', function () {
-            /*Compare the feed content. It should not be same as the intial contnent*/
-           expect($('.feed').html()).not.toBe(initialFeedContent);
-            
+            /*Compare the feed contents. Content for second feed shouldn't be 
+             * same as the content of first feed*/
+            expect(secondFeedContent).not.toBe(firstFeedContent);
+
         });
     });
 
